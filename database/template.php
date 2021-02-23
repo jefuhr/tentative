@@ -1,7 +1,7 @@
 <?php
   include("../env/account.php");
   include("../func/jsonfns.php");
-  include("../func/validation.php");
+  include("../func/dbfns.php");
 
   header('Content-type: application/json');
 

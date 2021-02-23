@@ -33,8 +33,6 @@
     }
   }
 
-  }
-
   function get_currency_data( $currencyType ) { // Returns a JSON object of currencyType
     global $db;
     global $currencyData;
@@ -91,7 +89,7 @@
     return return_json( "200", $all );
   }
 
-  function set_trade( $uuid, $itemType, $itemQuant, $requestType, $requestQuant ) { // add new trade marketplace
+  function add_trade( $uuid, $itemType, $itemQuant, $requestType, $requestQuant ) { // add new trade marketplace
     global $db;
     global $tradingData;
     $s = "INSERT INTO `$tradingData`(`uuid`, `itemType`, `itemQuant`, `requestType`, `requestQuant`) VALUES ('$uuid', '$itemType', '$itemQuant', '$requestType', '$requestQuant')";
@@ -114,7 +112,5 @@
     ( $t = mysqli_query($db, $s) ) or die ( return_json( "503", "Database error occured while updating resources for Player: $uuid." ) );
     return return_json("200", "Successfully updated resources for Player: $uuid.");
   }
-
-
 
 ?>
