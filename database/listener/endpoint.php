@@ -79,7 +79,6 @@
     return $response;
   }
 
-
   function requestProcessor($request) {
     echo "received request".PHP_EOL;
     var_dump($request);
@@ -90,7 +89,6 @@
     switch ($request["type"]) {
       case "database_request":
         $json = json_decode($request["message"]);
-        echo "Received Database request";
         return doAction($json);
 
       default:

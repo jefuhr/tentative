@@ -6,9 +6,6 @@
 
   $client = new rabbitMQClient("brokerRabbitMQ.ini","testServer");
 
-  // switch ($request['type']) {
-    
-  // }
   // $msg = "{
   //   \"action\" : \"login_user\",
   //   \"contents\" : {
