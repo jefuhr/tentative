@@ -1,39 +1,66 @@
+#!/usr/bin/php
 <?php
+  header('Content-type: application/json');
+
   include("../env/account.php");
   include("../func/jsonfns.php");
   include("../func/dbfns.php");
 
-  header('Content-type: application/json');
+  
 
   $db = mysqli_connect($hostname, $username, $password, $project);
   if (mysqli_connect_errno()) {
-    echo convert_to_json("503", "Unable to connect to database");
+    echo return_json("503", "Unable to connect to database.");
     exit();
   }
 
-  $req = $_POST["req"];
+  // $req = $_POST["req"];
+  $req = "{
+    \"action\" : \"login_user\",
+    \"contents\" : {
+      \"username\" : \"test\",
+      \"password\" : \"hashed_password\"
+    }
+  }";
   $json = json_decode($req);
   
-  $action = $json->$action;
+  $action = $json->action;
+  $contents = $json->contents;
 
   if(strcmp($action, "register_user") == 0) {
-    // register user
-  } else if (strcmp($action, "login") == 0) {
-    // login user
+    $username = $contents->username;
+    $password = $contents->password;
+    echo register($username, $password);
+    
+  } else if (strcmp($action, "login_user") == 0) {
+    $username = $contents->username;
+    $password = $contents->password;
+    echo login($username, $password);
+
   } else if (strcmp($action, "update_user") == 0) {
     // update player resources
+
   } else if (strcmp($action, "get_currency_data") == 0) {
-    // get individual currency data
+    $currencyType = $contents->currencyType;
+    echo get_currency_data($currencyType);
+
   } else if (strcmp($action, "get_all_currency_data") == 0) {
-    // get all currency data
+    echo get_all_currency_data();
+
   } else if (strcmp($action, "get_all_player_trades") == 0) {
-    // get all player trades
+    echo get_all_player_trades();
+
   } else if (strcmp($action, "add_new_trade") == 0) {
     // add trade
+
   } else if (strcmp($action, "delete_trade") == 0) {
-    // delete trade
+    $tradeID = $contents->tradeID;
+    echo delete_trade($tradeID);
+
+  } else {
+    echo return_json( "400", "Invalid action." );
   }
 
-
-
+  echo "\n";
+  exit();
 ?>
