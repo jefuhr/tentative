@@ -1,5 +1,5 @@
 <?php
-  function login( $username, $passwordword ) { // Returns a JSON object based on if user info is valid
+  function login( $username, $password ) { // Returns a JSON object based on if user info is valid
     global $db;
     global $userData;
 
@@ -14,6 +14,16 @@
     } else {
       return return_json( "403", "Invalid username or password." );
     }
+  }
+
+  function register( $username, $password ) {
+    global $db;
+    global $userData;
+
+    $s = "INSERT INTO `$userData` (`username`, `password`) VALUES ('$username', '$password')"; 
+    ( $t = mysqli_query($db, $s) ) or die ( return_json( "503", "Database error occured while registering new user." ) );
+    $num = mysqli_num_rows ( $t );
+    return return_json( "200", "Sucessfully registered new user.");
   }
 
   function get_username( $uuid ) { // Returns a username for a given uuid
@@ -46,8 +56,17 @@
         return return_json( "200", convert_currency_to_json( $r )); 
       }
     } else {
-      return return_json( "403", "Invalid currency type." );
+      return return_json( "400", "Invalid currency type." );
     }
+  }
+
+  function update_currency_data( $currencyType, $currentValue ) { // Update currentValue for currencyType
+    global $db;
+    global $currencyData;
+    $s = "UPDATE `$currencyData` SET `currentValue`='$currentValue' WHERE `currencyType`='$currencyType'";
+    ( $t = mysqli_query($db, $s) ) or die ( return_json( "503", "Database error occured while updating resources for Player: $uuid." ) );
+    return return_json("200", "Successfully updated currentValue for currencyType: $currencyType.");
+
   }
 
   function get_all_currency_data() { // Returns a JSON object of all currency
@@ -108,7 +127,7 @@
   function update_player_resources( $uuid, $food, $wood, $stone, $leather, $iron, $gold, $currency0, $currency1, $currency2 ) { // Update player resource values
     global $db;
     global $userData;
-    $s = "UPDATE `$userData` SET `food`='$food', `wood`='$wood', `stone`='$stone', `leather`='$leather', `iron`='$iron', `gold`='$gold', `currency0`='$currency0', `currency1`='$currency1', `currency2`='$currency2' WHERE uuid='$uuid'";
+    $s = "UPDATE `$userData` SET `food`='$food', `wood`='$wood', `stone`='$stone', `leather`='$leather', `iron`='$iron', `gold`='$gold', `currency0`='$currency0', `currency1`='$currency1', `currency2`='$currency2' WHERE `uuid`='$uuid'";
     ( $t = mysqli_query($db, $s) ) or die ( return_json( "503", "Database error occured while updating resources for Player: $uuid." ) );
     return return_json("200", "Successfully updated resources for Player: $uuid.");
   }

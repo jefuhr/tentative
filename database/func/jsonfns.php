@@ -2,7 +2,7 @@
   function return_json( $status, $message ) {
     return json_encode( [ 
       "status" => "$status", 
-      "message" => $message
+      "contents" => $message
     ] );
   }
 

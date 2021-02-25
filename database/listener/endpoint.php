@@ -15,11 +15,17 @@
   }
 
   // $req = $_POST["req"];
+  // $req = "{
+  //   \"action\" : \"login_user\",
+  //   \"contents\" : {
+  //     \"username\" : \"test\",
+  //     \"password\" : \"hashed_password\"
+  //   }
+  // }";
   $req = "{
-    \"action\" : \"login_user\",
+    \"action\" : \"get_currency_data\",
     \"contents\" : {
-      \"username\" : \"test\",
-      \"password\" : \"hashed_password\"
+      \"currencyType\" : \"0\"
     }
   }";
   $json = json_decode($req);
@@ -44,6 +50,11 @@
     $currencyType = $contents->currencyType;
     echo get_currency_data($currencyType);
 
+  } else if (strcmp($action, "update_currency") == 0) {
+    $currencyType = $contents->currencyType;
+    $currentValue = $contents->currentValue;
+    echo update($currencyType, $currentValue);
+  
   } else if (strcmp($action, "get_all_currency_data") == 0) {
     echo get_all_currency_data();
 
