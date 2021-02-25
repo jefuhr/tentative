@@ -1,8 +1,16 @@
 <?php
 
+
+session_start();
+include ("config.php");
+
 $db= ; //insert database
-$uuid=$_GET["user"];
-$password=$_GET["pass"];
+$username=$_GET["username"];
+$password=$_GET["password"];
+
+function auth ($username, $password, $db)
+	global $query;
+	$temp = "select * from playerData where username = '$username' ";
 
 
 
