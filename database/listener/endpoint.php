@@ -90,7 +90,7 @@
 
   function requestProcessor($request) {
     echo "received response".PHP_EOL;
-    // var_dump($response);
+    var_dump($request);
     if(!isset($request['type'])) {
       return "ERROR: unsupported message type";
     }
@@ -98,7 +98,9 @@
     switch ($request["type"]) {
       case "database_request":
         $json = json_decode($request["message"]);
-        return doAction($json);
+        $response = doAction($json);
+        var_dump($response);
+        return $response;
 
       default:
         return "ERROR: unsupported message type";
