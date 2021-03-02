@@ -16,72 +16,81 @@
   }
 
   function doAction($json) {
-    global $client;
-
     $action = $json->action;
     $contents = $json->contents;
-    $request = array();
-    $request["type"] = "database_response";
+    $response = array();
+    $response["type"] = "database_response";
   
     switch ($action) {
       case "register_user":
         $username = $contents->username;
         $password = $contents->password;
-        $request["message"] = register($username, $password);
+        $response["message"] = register($username, $password);
         break;
   
       case "login_user":
         $username = $contents->username;
         $password = $contents->password;
-        $request["message"] = login($username, $password);
+        $response["message"] = login($username, $password);
         break;
   
       case "update_user":
+        $uuid = $contents->uuid;
+        $food = $contents->food;
+        $wood = $contents->wood;
+        $stone = $contents->stone;
+        $leather = $contents->leather;
+        $iron = $contents->iron;
+        $gold = $contents->gold;
+        $currency0 = $contents->currency0;
+        $currency1 = $contents->currency1;
+        $currency2 = $contents->currency2;
+        $response["message"] = update_player_resources($uuid, $food, $wood, $stone, $leather, $iron, $gold, $currency0, $currency1, $currency2);
         break;
   
       case "get_currency_data":
         $currencyType = $contents->currencyType;
-        $request["message"] = get_currency_data($currencyType);
+        $response["message"] = get_currency_data($currencyType);
         break;
   
       case "update_currency":
         $currencyType = $contents->currencyType;
         $currentValue = $contents->currentValue;
-        $request["message"] = update($currencyType, $currentValue);
+        $response["message"] = update_currency_data($currencyType, $currentValue);
         break;
   
       case "get_all_currency_data": 
-        $request["message"] = get_all_currency_data();
+        $response["message"] = get_all_currency_data();
         break;
   
       case "get_all_player_trades":
-        $request["message"] = get_all_player_trades(); 
+        $response["message"] = get_all_player_trades(); 
         break;
   
       case "add_new_trade":
+        $uuid = $contents->uuid;
+        $itemType = $contents->itemType;
+        $itemQuant = $contents->itemQuant;
+        $requestType = $contents->requestType;
+        $requestQuant = $contents->requestQuant;
+        $response["message"] = add_trade($uuid, $itemType, $itemQuant, $requestType, $requestQuant);
         break;
   
       case "delete_trade":
         $tradeID = $contents->tradeID;
-        $request["message"] = delete_trade($tradeID);
+        $response["message"] = delete_trade($tradeID);
         break;
   
       default:
-        $request["message"] = return_json( "400", "Invalid action." );
+        $response["message"] = return_json( "400", "Invalid action." );
         break;
     }
-  
-    $response = $client->send_request($request);
-  
-    echo "client received response: ".PHP_EOL;
-    print_r($response);
-    echo "\n\n";
     return $response;
   }
 
   function requestProcessor($request) {
-    echo "received request".PHP_EOL;
-    var_dump($request);
+    echo "received response".PHP_EOL;
+    // var_dump($response);
     if(!isset($request['type'])) {
       return "ERROR: unsupported message type";
     }
@@ -92,12 +101,11 @@
         return doAction($json);
 
       default:
-        return array("returnCode"=>0,"message"=>"Server received request and provessed.");
+        return "ERROR: unsupported message type";
     }
   }
 
   $server = new rabbitMQServer("dbRabbitMQ.ini","testServer");
-  $client = new rabbitMQClient("brokerRabbitMQ.ini","testServer");
   
   echo "dbRMQServer BEGIN".PHP_EOL;
   $server->process_requests('requestProcessor');

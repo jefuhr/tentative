@@ -4,7 +4,7 @@
   require_once('get_host_info.inc');
   require_once('rabbitMQLib.inc');
 
-  $client = new rabbitMQClient("brokerRabbitMQ.ini","testServer");
+  $client = new rabbitMQClient("dbRabbitMQ.ini","testServer");
 
   // $msg = "{
   //   \"action\" : \"login_user\",
