@@ -1,0 +1,7 @@
+{
+    "action" : "update_currency",
+    "contents" : {
+      "currencyType" : 0,
+      "currentValue": 100
+    }
+  }
