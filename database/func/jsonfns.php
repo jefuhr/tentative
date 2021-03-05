@@ -2,7 +2,7 @@
   function return_json( $status, $message ) {
     return json_encode( [ 
       "status" => "$status", 
-      "message" => $message
+      "contents" => $message
     ] );
   }
 
@@ -17,6 +17,10 @@
   }
 
   function convert_trade_to_json( $r ) { // Placeholder in case array needs to be modified
+    return $r;
+  }
+
+  function convert_forum_to_json( $r ) { // Placeholder in case array needs to be modified
     return $r;
   }
 

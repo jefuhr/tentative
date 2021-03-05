@@ -1,8 +1,8 @@
 <?php
-  $hostname = "hostname";
-  $username = "username";
-  $project = "project";
-  $password = "password";
+  $hostname = "localhost";
+  $username = "cam";
+  $project = "it490";
+  $password = "it490password";
   $userData = "playerData";
   $currencyData = "currency";
   $tradingData = "marketplace";
