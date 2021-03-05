@@ -1,5 +1,5 @@
 {
-    "action" : "add_forum_post",
+    "action" : "add_new_forum",
     "contents" : {
         "uuid" : 0,
         "topic" : "This is a post topic",

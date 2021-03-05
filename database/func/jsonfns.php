@@ -20,5 +20,9 @@
     return $r;
   }
 
+  function convert_forum_to_json( $r ) { // Placeholder in case array needs to be modified
+    return $r;
+  }
+
 ?>
 

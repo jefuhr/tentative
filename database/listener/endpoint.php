@@ -17,24 +17,26 @@
 
   function doAction($json) {
     $action = $json->action;
-    $contents = $json->contents;
     $response = array();
     $response["type"] = "database_response";
   
     switch ($action) {
       case "register_user":
+        $contents = $json->contents;
         $username = $contents->username;
         $password = $contents->password;
         $response["message"] = register($username, $password);
         break;
   
       case "login_user":
+        $contents = $json->contents;
         $username = $contents->username;
         $password = $contents->password;
         $response["message"] = login($username, $password);
         break;
   
       case "update_user":
+        $contents = $json->contents;
         $uuid = $contents->uuid;
         $food = $contents->food;
         $wood = $contents->wood;
@@ -49,11 +51,13 @@
         break;
   
       case "get_currency_data":
+        $contents = $json->contents;
         $currencyType = $contents->currencyType;
         $response["message"] = get_currency_data($currencyType);
         break;
   
       case "update_currency":
+        $contents = $json->contents;
         $currencyType = $contents->currencyType;
         $currentValue = $contents->currentValue;
         $response["message"] = update_currency_data($currencyType, $currentValue);
@@ -68,6 +72,7 @@
         break;
   
       case "add_new_trade":
+        $contents = $json->contents;
         $uuid = $contents->uuid;
         $itemType = $contents->itemType;
         $itemQuant = $contents->itemQuant;
@@ -77,8 +82,35 @@
         break;
   
       case "delete_trade":
+        $contents = $json->contents;
         $tradeID = $contents->tradeID;
         $response["message"] = delete_trade($tradeID);
+        break;
+
+      case "add_new_forum":
+        $contents = $json->contents;
+        $uuid = $contents->uuid;
+        $topic = $contents->topic;
+        $message = $contents->message;
+        $response["message"] = add_forum_post($uuid, $topic, $message);
+        break;
+
+      case "add_new_reply":
+        $contents = $json->contents;
+        $uuid = $contents->uuid;
+        $topicID = $contents->topicID;
+        $message = $contents->message;
+        $response["message"] = add_forum_post($uuid, $topicID, $message);
+        break;
+
+      case "get_all_forum_topics":
+        $response["message"] = get_all_forum_topics();
+        break;
+
+      case "get_all_forum_replies":
+        $contents = $json->contents;
+        $topicID = $contents->$topicID
+        $response["message"] = get_all_forum_replies($topicID);
         break;
   
       default:
