@@ -139,7 +139,7 @@
     global $db;
     global $forumData;
 
-    $s = "SELECT * FROM `$currencyData` WHERE topic IS NOT NULL"; 
+    $s = "SELECT * FROM `$forumData` WHERE topic IS NOT NULL"; 
     ( $t = mysqli_query($db, $s) ) or die ( return_json( "503", "Database error occured while submitting forum post for Player: $uuid." ) );
     $num = mysqli_num_rows ( $t );
 
@@ -161,7 +161,7 @@
     global $db;
     global $forumData;
 
-    $s = "SELECT * FROM `$currencyData` WHERE topic IS NOT NULL"; 
+    $s = "SELECT * FROM `$forumData` WHERE topic IS NOT NULL"; 
     ( $t = mysqli_query($db, $s) ) or die ( return_json( "503", "Database error occured while fetching all forum topics." ) );
     $num = mysqli_num_rows ( $t );
 
@@ -182,7 +182,7 @@
     global $db;
     global $forumData;
 
-    $s = "SELECT * FROM `$currencyData` WHERE topicID='$topicID'"; 
+    $s = "SELECT * FROM `$forumData` WHERE topicID='$topicID'"; 
     ( $t = mysqli_query($db, $s) ) or die ( return_json( "503", "Database error occured while fetching all forum topics." ) );
     $num = mysqli_num_rows ( $t );
 

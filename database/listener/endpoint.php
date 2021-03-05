@@ -100,7 +100,7 @@
         $uuid = $contents->uuid;
         $topicID = $contents->topicID;
         $message = $contents->message;
-        $response["message"] = add_forum_post($uuid, $topicID, $message);
+        $response["message"] = add_forum_reply($uuid, $topicID, $message);
         break;
 
       case "get_all_forum_topics":
@@ -109,7 +109,7 @@
 
       case "get_all_forum_replies":
         $contents = $json->contents;
-        $topicID = $contents->$topicID
+        $topicID = $contents->$topicID;
         $response["message"] = get_all_forum_replies($topicID);
         break;
   
