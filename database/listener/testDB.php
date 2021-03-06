@@ -6,20 +6,35 @@
 
   $client = new rabbitMQClient("dbRabbitMQ.ini","testServer");
 
+  $msg = "{
+    \"action\" : \"login_user\",
+    \"contents\" : {
+      \"username\" : \"test\",
+      \"password\" : \"hashed_password\"
+    }
+  }";
+  
   // $msg = "{
-  //   \"action\" : \"login_user\",
+  //   \"action\" : \"get_currency_data\",
   //   \"contents\" : {
-  //     \"username\" : \"test\",
-  //     \"password\" : \"hashed_password\"
+  //     \"currencyType\" : 0
   //   }
   // }";
   
-  $msg = "{
-    \"action\" : \"get_currency_data\",
-    \"contents\" : {
-      \"currencyType\" : 0
-    }
-  }";
+  // $msg = "{
+  //   \"action\" : \"get_all_currency_data\"
+  // }";
+
+  // $msg = "{
+  //   \"action\" : \"get_all_forum_topics\"
+  // }";
+
+  // $msg = "{
+  //   \"action\" : \"get_all_forum_replies\",
+  //   \"contents\" : {
+  //     \"topicID\" : 0
+  //   }
+  // }";
 
   $request = array();
   $request['type'] = "database_request";

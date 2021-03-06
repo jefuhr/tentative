@@ -1,0 +1,7 @@
+{
+  "action" : "register_user",
+  "contents" : {
+    "username" : "username",
+    "password" : "hashed_password"
+  }
+}

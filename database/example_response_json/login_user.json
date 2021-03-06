@@ -1,0 +1,17 @@
+{
+    "status": "200",
+    "contents": {
+        "uuid": "0",
+        "username": "test",
+        "food": "0",
+        "wood": "0",
+        "stone": "0",
+        "leather": "0",
+        "iron": "0",
+        "gold": "0",
+        "currency0": "0",
+        "currency1": "0",
+        "currency2": "0",
+        "workerCount": "0"
+    }
+}
