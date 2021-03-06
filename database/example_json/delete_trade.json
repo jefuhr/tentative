@@ -1,6 +1,0 @@
-{
-  "action" : "delete_trade",
-  "contents" : {
-    "tradeID" : 0
-  }
-}

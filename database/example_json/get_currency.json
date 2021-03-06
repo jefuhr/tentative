@@ -1,6 +1,0 @@
-{
-  "action" : "get_currency_data",
-  "contents" : {
-    "currencyType" : 0
-  }
-}

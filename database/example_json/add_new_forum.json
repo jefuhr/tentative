@@ -1,8 +1,0 @@
-{
-    "action" : "add_new_forum",
-    "contents" : {
-        "uuid" : 0,
-        "topic" : "This is a post topic",
-        "message" : "This is a post message"
-    }
-}
