@@ -14,7 +14,7 @@ function doLogin($username,$password)
 
 function doDBRequest($request)
 {
-  $client = new rabbitMQClient("dbRabbitMQ.ini","testServer");
+  global $client;
   $response = $client->send_request($request);
   return $response;
 }
@@ -42,6 +42,7 @@ function requestProcessor($request)
 $server = new rabbitMQServer("brokerRabbitMQ.ini","testServer");
 
 echo "testRabbitMQServer BEGIN".PHP_EOL;
+$client = new rabbitMQClient("dbRabbitMQ.ini","testServer");
 $server->process_requests('requestProcessor');
 echo "testRabbitMQServer END".PHP_EOL;
 exit();
