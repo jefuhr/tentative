@@ -16,6 +16,7 @@
   }
 
   function doAction($json) {
+    global $db;
     $action = $json->action;
     $response = array();
     $response["type"] = "database_response";
@@ -23,20 +24,21 @@
     switch ($action) {
       case "register_user":
         $contents = $json->contents;
-        $username = $contents->username;
-        $password = $contents->password;
+        $username = mysqli_real_escape_string($db, $contents->username);
+        $password = mysqli_real_escape_string($db, $contents->password);
         $response["message"] = register($username, $password);
         break;
   
       case "login_user":
         $contents = $json->contents;
-        $username = $contents->username;
-        $password = $contents->password;
+        $username = mysqli_real_escape_string($db, $contents->username);
+        $password = mysqli_real_escape_string($db, $contents->password);
         $response["message"] = login($username, $password);
         break;
   
       case "update_user":
         $contents = $json->contents;
+        // var_dump($contents);
         $uuid = $contents->uuid;
         $food = $contents->food;
         $wood = $contents->wood;
@@ -90,16 +92,16 @@
       case "add_new_forum":
         $contents = $json->contents;
         $uuid = $contents->uuid;
-        $topic = $contents->topic;
-        $message = $contents->message;
+        $topic = mysqli_real_escape_string($db, $contents->topic);
+        $message = mysqli_real_escape_string($db, $contents->message);
         $response["message"] = add_forum_post($uuid, $topic, $message);
         break;
 
       case "add_new_reply":
         $contents = $json->contents;
         $uuid = $contents->uuid;
-        $topicID = $contents->topicID;
-        $message = $contents->message;
+        $topicID = mysqli_real_escape_string($db, $contents->topicID);
+        $message = mysqli_real_escape_string($db, $contents->message);
         $response["message"] = add_forum_reply($uuid, $topicID, $message);
         break;
 

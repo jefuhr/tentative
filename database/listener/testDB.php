@@ -6,13 +6,13 @@
 
   $client = new rabbitMQClient("dbRabbitMQ.ini","testServer");
 
-  $msg = "{
-    \"action\" : \"login_user\",
-    \"contents\" : {
-      \"username\" : \"test\",
-      \"password\" : \"hashed_password\"
-    }
-  }";
+  // $msg = "{
+  //   \"action\" : \"login_user\",
+  //   \"contents\" : {
+  //     \"username\" : \"test\",
+  //     \"password\" : \"hashed_password\"
+  //   }
+  // }";
   
   // $msg = "{
   //   \"action\" : \"get_currency_data\",
@@ -21,9 +21,9 @@
   //   }
   // }";
   
-  // $msg = "{
-  //   \"action\" : \"get_all_currency_data\"
-  // }";
+  $msg = "{
+    \"action\" : \"get_all_currency_data\"
+  }";
 
   // $msg = "{
   //   \"action\" : \"get_all_forum_topics\"
