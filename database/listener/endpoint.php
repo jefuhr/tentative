@@ -111,7 +111,7 @@
 
       case "get_all_forum_replies":
         $contents = $json->contents;
-        $topicID = $contents->$topicID;
+        $topicID = $contents->topicID;
         $response["message"] = get_all_forum_replies($topicID);
         break;
   
