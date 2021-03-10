@@ -3,6 +3,7 @@
 
   function simple_query( $s, $error, $success ) {
     global $db;
+
     try {
       ( $t = mysqli_query($db, $s) ); 
     } catch (Exception $e)  {
@@ -63,7 +64,6 @@
   }
 
   function register( $username, $password ) {
-    global $db;
     global $userData;
 
     $error = "Database error occured while registering new user: {$username}.";
@@ -119,7 +119,6 @@
   }
 
   function update_currency_data( $currencyType, $currentValue ) { // Update currentValue for currencyType
-    global $db;
     global $currencyData;
 
     $error = "Database error occured while updating currencyValue for currencyType: {$currencyType}.";
@@ -179,7 +178,6 @@
   }
 
   function add_trade( $uuid, $itemType, $itemQuant, $requestType, $requestQuant ) { // add new trade marketplace
-    global $db;
     global $tradingData;
 
     $error = "Database error occured while submitting trade for Player: {$uuid}.";
@@ -190,7 +188,6 @@
   }
 
   function delete_trade( $tradeID ) { // delete trade from marketplace
-    global $db;
     global $tradingData;
 
     $error = "Database error occured while deleting Trade: {$tradeID}.";
@@ -201,7 +198,6 @@
   }
 
   function update_player_resources( $uuid, $food, $wood, $stone, $leather, $iron, $gold, $currency0, $currency1, $currency2 ) { // Update player resource values
-    global $db;
     global $userData;
 
     $error = "Database error occured while updating resources for Player: {$uuid}.";
@@ -232,7 +228,6 @@
   }
 
   function add_forum_reply( $uuid, $topicID, $message ){
-    global $db;
     global $forumData;
 
     $error = "Database error occured while submitting forum reply for Player: {$uuid}.";

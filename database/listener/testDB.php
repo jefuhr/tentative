@@ -25,9 +25,9 @@
   //   \"action\" : \"get_all_currency_data\"
   // }";
 
-  // $msg = "{
-  //   \"action\" : \"get_all_forum_topics\"
-  // }";
+  $msg = "{
+    \"action\" : \"get_all_forum_topics\"
+  }";
 
   // $msg = "{
   //   \"action\" : \"get_all_forum_replies\",
