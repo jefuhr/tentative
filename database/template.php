@@ -7,7 +7,7 @@
 
   $db = mysqli_connect($hostname, $username, $password, $project);
   if (mysqli_connect_errno()) {
-    echo convert_to_json("503", "Unable to connect to database");
+    echo creturn_json("503", "Unable to connect to database");
     exit();
   }
 

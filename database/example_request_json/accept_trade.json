@@ -1,0 +1,7 @@
+{
+    "action" : "accept_trade",
+    "contents" : {
+      "tradeID" : 0,
+      "uuid" : 0
+    }
+  }

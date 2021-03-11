@@ -2,6 +2,6 @@
   "action" : "register_user",
   "contents" : {
     "username" : "username",
-    "passsword" : "hashed_password"
+    "password" : "hashed_password"
   }
 }

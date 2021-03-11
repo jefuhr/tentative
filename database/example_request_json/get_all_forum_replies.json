@@ -1,0 +1,6 @@
+{
+  "action" : "get_all_forum_replies",
+  "contents" : {
+    "topicID" : 0
+  }
+}
