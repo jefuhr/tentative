@@ -189,20 +189,21 @@
 
   function accept_trade( $tradeID, $uuid ){
     global $db;
-    global $tradeData;
+    global $tradingData;
 
     $error = "Database error occured while accepting trade: {$tradeID} for Player: {$uuid}.";
     $success = "Successfully acccepted trade: {$tradeID} for Player: {$uuid}.";
-    $s = "UPDATE `marketplace` SET `buyerID`='$uuid' WHERE `tradeID`='$tradeID' and buyerID IS NULL";
-
+    $s = "UPDATE `$tradingData` SET `buyerID`='$uuid' WHERE `tradeID`='$tradeID' and `buyerID` IS NULL";
+    echo "$s" . "\n";
+    $num = 0;
     try {
       ( $t = mysqli_query($db, $s) ); 
+      $num = mysqli_affected_rows($db);
     } catch (Exception $e)  {
       return return_json( "502", $error );
     }
 
-    $num = mysqli_num_rows ( $t );
-    if ($num >= 1) {
+    if ( $num ) {
       return return_json( "200", $success );
     }
     return return_json( "502", $error );

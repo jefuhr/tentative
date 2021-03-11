@@ -85,8 +85,8 @@
         
       case "accept_trade":
         $contents = $json->contents;
-        $tradeID = $json->tradeID;
-        $uuid = $json->uuid;
+        $tradeID = $contents->tradeID;
+        $uuid = $contents->uuid;
         $response["message"] = accept_trade($tradeID, $uuid);
         break;
 
