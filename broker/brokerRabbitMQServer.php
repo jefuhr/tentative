@@ -17,9 +17,7 @@ function doLogin($username,$password)
 
 function doDBRequest($request)
 {
-  $_SESSION['request'] = $request;
-  echo '<br /><a href="brokerToDBClient.php">page 2</a>';
-  return $_SESSION['response'];
+  return shell_exec("./brokerToDBClient.php $request");
 }
 
 function requestProcessor($request)
