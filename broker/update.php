@@ -40,19 +40,19 @@ function get_currency_data($index){
     }
   }";
 
-  /*$client = new rabbitMQClient("brokerRabbitMQ.ini","testServer");
+  $client = new rabbitMQClient("brokerRabbitMQ.ini","testServer");
   $request = array();
   $request['type'] = "database_request";
   $request['message'] = $msg;
-  $response = $client->send_request($request);*/
-  $response = [
+  $response = $client->send_request($request);
+  /*$response = [
     "type" => "database_response",
     "message" => "{\"status\":\"200\",\"contents\":{\"currencyType\":\"0\",\"currentValue\":\"1\",\"food\":\"100\"}}"
-  ];
+  ];*/ //test code when db not available
   $current = json_decode($response['message']);
   $curr_value = floatval($current->contents->currentValue);
   $new_value = $curr_value * (1 + floatval($json->percent_change_24h)/100);
-  echo $curr_value."->".$new_value;
+  //echo $curr_value."->".$new_value;
   
   $msg = "{
     \"action\" : \"update_currency_data\",
@@ -62,7 +62,8 @@ function get_currency_data($index){
     }
   }";
   
-  echo $msg;
+  //echo $msg;
+  
 
 }
 
