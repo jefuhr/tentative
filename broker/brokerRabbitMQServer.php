@@ -17,9 +17,12 @@ function doLogin($username,$password)
 
 function doDBRequest($request)
 {
-  //return shell_exec("./brokerToDBClient.php $request");
-  include "brokerToDBClient.php";
-  return DBRequest($request);
+  $out = $request["message"];
+  $msg = shell_exec("./brokerToDBClient.php \"$out\"");
+  $response = array();
+  $response['type'] = "database_response";
+  $response['message'] = trim($msg);
+  return $response;
 }
 
 function requestProcessor($request)
