@@ -17,7 +17,9 @@ function doLogin($username,$password)
 
 function doDBRequest($request)
 {
-  return shell_exec("./brokerToDBClient.php $request");
+  //return shell_exec("./brokerToDBClient.php $request");
+  include "brokerToDBClient.php";
+  return DBRequest($request);
 }
 
 function requestProcessor($request)
