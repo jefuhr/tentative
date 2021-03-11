@@ -82,7 +82,14 @@
         $requestQuant = $contents->requestQuant;
         $response["message"] = add_trade($uuid, $itemType, $itemQuant, $requestType, $requestQuant);
         break;
-  
+        
+      case "accept_trade":
+        $contents = $json->contents;
+        $tradeID = $json->tradeID;
+        $uuid = $json->uuid;
+        $response["message"] = accept_trade($tradeID, $uuid);
+        break;
+
       case "delete_trade":
         $contents = $json->contents;
         $tradeID = $contents->tradeID;

@@ -156,7 +156,7 @@
     global $tradingData;
 
     $error = "Database error occured while fetching all trade data.";
-    $s = "SELECT * FROM `$currencyData`"; 
+    $s = "SELECT * FROM `$tradingData`"; 
 
     try {
       ( $t = mysqli_query($db, $s) ); 
@@ -185,6 +185,27 @@
     $s = "INSERT INTO `$tradingData`(`uuid`, `itemType`, `itemQuant`, `requestType`, `requestQuant`) VALUES ('$uuid', '$itemType', '$itemQuant', '$requestType', '$requestQuant')";
 
     return simple_query($s, $error, $success);
+  }
+
+  function accept_trade( $tradeID, $uuid ){
+    global $db;
+    global $tradeData;
+
+    $error = "Database error occured while accepting trade: {$tradeID} for Player: {$uuid}.";
+    $success = "Successfully acccepted trade: {$tradeID} for Player: {$uuid}.";
+    $s = "UPDATE `marketplace` SET `buyerID`='$uuid' WHERE `tradeID`='$tradeID' and buyerID IS NULL";
+
+    try {
+      ( $t = mysqli_query($db, $s) ); 
+    } catch (Exception $e)  {
+      return return_json( "502", $error );
+    }
+
+    $num = mysqli_num_rows ( $t );
+    if ($num >= 1) {
+      return return_json( "200", $success );
+    }
+    return return_json( "502", $error );
   }
 
   function delete_trade( $tradeID ) { // delete trade from marketplace
@@ -248,7 +269,7 @@
   function get_all_forum_replies($topicID) {
     global $forumData;
 
-    $s = "SELECT * FROM `$forumData` WHERE `topicID`=$topicID"; 
+    $s = "SELECT * FROM `$forumData` WHERE `topicID`=$topicID and `topic` IS NULL"; 
 
     return generate_forum_json($s, "Database error occured while fetching forum replies." );
   }

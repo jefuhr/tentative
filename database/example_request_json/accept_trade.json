@@ -1,0 +1,7 @@
+{
+    "action" : "get_all_forum_replies",
+    "contents" : {
+      "tradeID" : 0,
+      "uuid" : 0
+    }
+  }
