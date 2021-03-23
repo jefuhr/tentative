@@ -18,7 +18,7 @@ function doLogin($username,$password)
 function doDBRequest($request)
 {
   $out = $request["message"];
-  $msg = shell_exec("./brokerToDBClient.php \"$out\"");
+  $msg = shell_exec("./brokerToDBClient.php ".escapeshellarg("$out"));
   $response = array();
   $response['type'] = "database_response";
   $response['message'] = trim($msg);

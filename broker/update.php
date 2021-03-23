@@ -30,8 +30,7 @@ function get_currency_data($index){
 
   $raw_json = substr(file_get_contents($URL), 1, -1);
   $json = json_decode($raw_json);
-  //echo $json->name.": ".$json->percent_change_24h."%";
-  //echo $index.": ".$json->percent_change_24h."%\n";
+  echo $json->name."($index): ".$json->percent_change_24h."%\n";
   
   $msg = "{
     \"action\" : \"get_currency_data\",
@@ -39,30 +38,33 @@ function get_currency_data($index){
       \"currencyType\" : \"$index\"
     }
   }";
-
-  $client = new rabbitMQClient("brokerRabbitMQ.ini","testServer");
-  $request = array();
-  $request['type'] = "database_request";
-  $request['message'] = $msg;
-  $response = $client->send_request($request);
+  
+  $response = shell_exec("./updateToBrokerClient.php ".escapeshellarg("$msg"));
+  
   /*$response = [
     "type" => "database_response",
     "message" => "{\"status\":\"200\",\"contents\":{\"currencyType\":\"0\",\"currentValue\":\"1\",\"food\":\"100\"}}"
   ];*/ //test code when db not available
-  $current = json_decode($response['message']);
+  
+  $current = json_decode($response);
   $curr_value = floatval($current->contents->currentValue);
   $new_value = $curr_value * (1 + floatval($json->percent_change_24h)/100);
-  //echo $curr_value."->".$new_value;
+  echo $index.": ".$curr_value."->".$new_value."\n";
   
-  $msg = "{
-    \"action\" : \"update_currency_data\",
+  $out = "{
+    \"action\" : \"update_currency\",
     \"contents\" : {
       \"currencyType\" : \"$index\",
       \"currentValue\" : \"$new_value\"
     }
   }";
   
-  //echo $msg;
+  $msg = shell_exec("./brokerToDBClient.php ".escapeshellarg("$out"));
+  $response = array();
+  $response['type'] = "database_response";
+  $response['message'] = trim($msg);
+  var_dump($response);
+  echo "\n";
   
 
 }
