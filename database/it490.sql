@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 10, 2021 at 04:20 PM
+-- Generation Time: Apr 16, 2021 at 09:38 AM
 -- Server version: 8.0.23-0ubuntu0.20.04.1
 -- PHP Version: 7.4.3
 
@@ -117,18 +117,19 @@ CREATE TABLE `playerData` (
   `currency0` int NOT NULL DEFAULT '0',
   `currency1` int NOT NULL DEFAULT '0',
   `currency2` int NOT NULL DEFAULT '0',
-  `workerCount` int NOT NULL DEFAULT '0'
+  `workerCount` int NOT NULL DEFAULT '0',
+  `tileJson` varchar(10000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `playerData`
 --
 
-INSERT INTO `playerData` (`uuid`, `password`, `username`, `food`, `wood`, `stone`, `leather`, `iron`, `gold`, `currency0`, `currency1`, `currency2`, `workerCount`) VALUES
-(0, 'hashed_password', 'test', 0, 0, 0, 0, 0, 0, 1, 10, 100, 0),
-(1, '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'unityuser', 13, 3, 14, 9, 8, 9, 0, 0, 0, 0),
-(3, '30274c47903bd1bac7633bbf09743149ebab805f', 'unityuser2', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(5, '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'unityuser3', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO `playerData` (`uuid`, `password`, `username`, `food`, `wood`, `stone`, `leather`, `iron`, `gold`, `currency0`, `currency1`, `currency2`, `workerCount`, `tileJson`) VALUES
+(0, 'hashed_password', 'test', 0, 0, 0, 0, 0, 0, 1, 10, 100, 0, ''),
+(1, '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'unityuser', 13, 3, 14, 9, 8, 9, 0, 0, 0, 0, ''),
+(3, '30274c47903bd1bac7633bbf09743149ebab805f', 'unityuser2', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ''),
+(5, '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'unityuser3', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
 
 --
 -- Indexes for dumped tables
