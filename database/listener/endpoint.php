@@ -49,7 +49,8 @@
         $currency0 = $contents->currency0;
         $currency1 = $contents->currency1;
         $currency2 = $contents->currency2;
-        $response["message"] = update_player_resources($uuid, $food, $wood, $stone, $leather, $iron, $gold, $currency0, $currency1, $currency2);
+        $tileJson = mysqli_real_escape_string($db, json_encode($contents->tilejson));
+        $response["message"] = update_player_resources($uuid, $food, $wood, $stone, $leather, $iron, $gold, $currency0, $currency1, $currency2, $tileJson);
         break;
   
       case "get_currency_data":

@@ -219,12 +219,12 @@
     return simple_query($s, $error, $success);
   }
 
-  function update_player_resources( $uuid, $food, $wood, $stone, $leather, $iron, $gold, $currency0, $currency1, $currency2 ) { // Update player resource values
+  function update_player_resources( $uuid, $food, $wood, $stone, $leather, $iron, $gold, $currency0, $currency1, $currency2, $tilejson ) { // Update player resource values
     global $userData;
 
     $error = "Database error occured while updating resources for Player: {$uuid}.";
     $success = "Successfully updated resources for Player: {$uuid}.";
-    $s = "UPDATE `$userData` SET `food`='$food', `wood`='$wood', `stone`='$stone', `leather`='$leather', `iron`='$iron', `gold`='$gold', `currency0`='$currency0', `currency1`='$currency1', `currency2`='$currency2' WHERE `uuid`='$uuid'";
+    $s = "UPDATE `$userData` SET `food`='$food', `wood`='$wood', `stone`='$stone', `leather`='$leather', `iron`='$iron', `gold`='$gold', `currency0`='$currency0', `currency1`='$currency1', `currency2`='$currency2', `tilejson`='$tilejson' WHERE `uuid`='$uuid'";
     
     return simple_query($s, $error, $success);
   }
