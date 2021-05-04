@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 16, 2021 at 09:38 AM
+-- Generation Time: May 04, 2021 at 03:59 PM
 -- Server version: 8.0.23-0ubuntu0.20.04.1
 -- PHP Version: 7.4.3
 
@@ -101,6 +101,28 @@ CREATE TABLE `marketplace` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `missions`
+--
+
+CREATE TABLE `missions` (
+  `missionID` int NOT NULL,
+  `requestType` set('food','wood','stone','leather','iron','gold') NOT NULL,
+  `requestCount` int NOT NULL,
+  `rewardType` set('food','wood','stone','leather','iron','gold') NOT NULL,
+  `rewardCount` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `missions`
+--
+
+INSERT INTO `missions` (`missionID`, `requestType`, `requestCount`, `rewardType`, `rewardCount`) VALUES
+(1, 'food', 100, 'gold', 10),
+(2, 'stone', 200, 'iron', 100);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `playerData`
 --
 
@@ -127,7 +149,7 @@ CREATE TABLE `playerData` (
 
 INSERT INTO `playerData` (`uuid`, `password`, `username`, `food`, `wood`, `stone`, `leather`, `iron`, `gold`, `currency0`, `currency1`, `currency2`, `workerCount`, `tileJson`) VALUES
 (0, 'hashed_password', 'test', 0, 0, 0, 0, 0, 0, 1, 10, 100, 0, ''),
-(1, '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'unityuser', 13, 3, 14, 9, 8, 9, 0, 0, 0, 0, ''),
+(1, '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'unityuser', 27, 13, 28, 27, 23, 19, 0, 0, 0, 0, '[{\"id\":0,\"type\":3,\"level\":1},{\"id\":1,\"type\":3,\"level\":1},{\"id\":2,\"type\":1,\"level\":1},{\"id\":3,\"type\":0,\"level\":1},{\"id\":4,\"type\":1,\"level\":1},{\"id\":5,\"type\":3,\"level\":1},{\"id\":6,\"type\":3,\"level\":1},{\"id\":7,\"type\":1,\"level\":1},{\"id\":8,\"type\":0,\"level\":1},{\"id\":9,\"type\":1,\"level\":1},{\"id\":10,\"type\":2,\"level\":1},{\"id\":11,\"type\":2,\"level\":1},{\"id\":12,\"type\":1,\"level\":1},{\"id\":13,\"type\":0,\"level\":1},{\"id\":14,\"type\":1,\"level\":1},{\"id\":15,\"type\":2,\"level\":1},{\"id\":16,\"type\":2,\"level\":1},{\"id\":17,\"type\":1,\"level\":1},{\"id\":18,\"type\":0,\"level\":1},{\"id\":19,\"type\":1,\"level\":1},{\"id\":20,\"type\":2,\"level\":1},{\"id\":21,\"type\":2,\"level\":1},{\"id\":22,\"type\":1,\"level\":1},{\"id\":23,\"type\":0,\"level\":1},{\"id\":24,\"type\":1,\"level\":1}]'),
 (3, '30274c47903bd1bac7633bbf09743149ebab805f', 'unityuser2', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ''),
 (5, '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'unityuser3', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
 
@@ -154,6 +176,12 @@ ALTER TABLE `marketplace`
   ADD PRIMARY KEY (`tradeID`);
 
 --
+-- Indexes for table `missions`
+--
+ALTER TABLE `missions`
+  ADD PRIMARY KEY (`missionID`);
+
+--
 -- Indexes for table `playerData`
 --
 ALTER TABLE `playerData`
@@ -170,6 +198,12 @@ ALTER TABLE `playerData`
 --
 ALTER TABLE `marketplace`
   MODIFY `tradeID` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `missions`
+--
+ALTER TABLE `missions`
+  MODIFY `missionID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `playerData`
