@@ -1,0 +1,6 @@
+{
+  "action": "get_mission",
+  "contents": {
+    "missionID": 0
+  }
+}

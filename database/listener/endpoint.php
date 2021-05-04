@@ -49,7 +49,7 @@
         $currency0 = $contents->currency0;
         $currency1 = $contents->currency1;
         $currency2 = $contents->currency2;
-        $tileJson = mysqli_real_escape_string($db, json_encode($contents->tilejson));
+        $tileJson = mysqli_real_escape_string($db, json_encode($contents->tileJson));
         $response["message"] = update_player_resources($uuid, $food, $wood, $stone, $leather, $iron, $gold, $currency0, $currency1, $currency2, $tileJson);
         break;
   
@@ -122,7 +122,13 @@
         $topicID = $contents->topicID;
         $response["message"] = get_all_forum_replies($topicID);
         break;
-  
+        
+      case "get_mission":
+        $contents = $json->contents;
+        $missionID = $contents->missionID;
+        $response["message"] = get_mission($missionID);
+        break;
+        
       default:
         $response["message"] = return_json( "400", "Invalid action." );
         break;

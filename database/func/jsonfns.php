@@ -24,5 +24,8 @@
     return $r;
   }
 
+  function convert_mission_to_json( $r ) {// Placeholder in case array needs to be modified
+    return $r;
+  }
 ?>
 
