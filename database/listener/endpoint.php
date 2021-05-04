@@ -10,6 +10,7 @@
   require_once("../func/dbfns.php");
 
   $db = mysqli_connect($hostname, $username, $password, $project);
+  $logFile = fopen("logs/".date("Y-m-d").".txt", "as");
   if (mysqli_connect_errno()) {
     echo return_json("503", "Unable to connect to database.");
     exit();
@@ -128,7 +129,7 @@
         $missionID = $contents->missionID;
         $response["message"] = get_mission($missionID);
         break;
-        
+
       default:
         $response["message"] = return_json( "400", "Invalid action." );
         break;
@@ -137,8 +138,10 @@
   }
 
   function requestProcessor($request) {
+    global $logFile;
     echo "received response".PHP_EOL;
     var_dump($request);
+    fwrite($logFile, json_encode($request) . PHP_EOL);
     if(!isset($request['type'])) {
       return "ERROR: unsupported message type";
     }
@@ -148,6 +151,7 @@
         $json = json_decode($request["message"]);
         $response = doAction($json);
         var_dump($response);
+        fwrite($logFile, json_encode($response) . PHP_EOL);
         return $response;
 
       default:
@@ -160,5 +164,6 @@
   echo "dbRMQServer BEGIN".PHP_EOL;
   $server->process_requests('requestProcessor');
   echo "dbRMQServer END".PHP_EOL;
+  fclose($logFile);
   exit();
 ?>
