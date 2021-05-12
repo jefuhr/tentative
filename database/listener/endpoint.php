@@ -10,6 +10,7 @@
   require_once("../func/dbfns.php");
 
   $db = mysqli_connect($hostname, $username, $password, $project);
+  $logFile = fopen("logs/".date("Y-m-d").".txt", "as");
   if (mysqli_connect_errno()) {
     echo return_json("503", "Unable to connect to database.");
     exit();
@@ -49,7 +50,8 @@
         $currency0 = $contents->currency0;
         $currency1 = $contents->currency1;
         $currency2 = $contents->currency2;
-        $response["message"] = update_player_resources($uuid, $food, $wood, $stone, $leather, $iron, $gold, $currency0, $currency1, $currency2);
+        $tileJson = mysqli_real_escape_string($db, json_encode($contents->tileJson));
+        $response["message"] = update_player_resources($uuid, $food, $wood, $stone, $leather, $iron, $gold, $currency0, $currency1, $currency2, $tileJson);
         break;
   
       case "get_currency_data":
@@ -121,7 +123,13 @@
         $topicID = $contents->topicID;
         $response["message"] = get_all_forum_replies($topicID);
         break;
-  
+        
+      case "get_mission":
+        $contents = $json->contents;
+        $missionID = $contents->missionID;
+        $response["message"] = get_mission($missionID);
+        break;
+
       default:
         $response["message"] = return_json( "400", "Invalid action." );
         break;
@@ -130,8 +138,10 @@
   }
 
   function requestProcessor($request) {
+    global $logFile;
     echo "received response".PHP_EOL;
     var_dump($request);
+    fwrite($logFile, json_encode($request) . PHP_EOL);
     if(!isset($request['type'])) {
       return "ERROR: unsupported message type";
     }
@@ -141,6 +151,7 @@
         $json = json_decode($request["message"]);
         $response = doAction($json);
         var_dump($response);
+        fwrite($logFile, json_encode($response) . PHP_EOL);
         return $response;
 
       default:
@@ -153,5 +164,6 @@
   echo "dbRMQServer BEGIN".PHP_EOL;
   $server->process_requests('requestProcessor');
   echo "dbRMQServer END".PHP_EOL;
+  fclose($logFile);
   exit();
 ?>

@@ -219,12 +219,12 @@
     return simple_query($s, $error, $success);
   }
 
-  function update_player_resources( $uuid, $food, $wood, $stone, $leather, $iron, $gold, $currency0, $currency1, $currency2 ) { // Update player resource values
+  function update_player_resources( $uuid, $food, $wood, $stone, $leather, $iron, $gold, $currency0, $currency1, $currency2, $tilejson ) { // Update player resource values
     global $userData;
 
     $error = "Database error occured while updating resources for Player: {$uuid}.";
     $success = "Successfully updated resources for Player: {$uuid}.";
-    $s = "UPDATE `$userData` SET `food`='$food', `wood`='$wood', `stone`='$stone', `leather`='$leather', `iron`='$iron', `gold`='$gold', `currency0`='$currency0', `currency1`='$currency1', `currency2`='$currency2' WHERE `uuid`='$uuid'";
+    $s = "UPDATE `$userData` SET `food`='$food', `wood`='$wood', `stone`='$stone', `leather`='$leather', `iron`='$iron', `gold`='$gold', `currency0`='$currency0', `currency1`='$currency1', `currency2`='$currency2', `tilejson`='$tilejson' WHERE `uuid`='$uuid'";
     
     return simple_query($s, $error, $success);
   }
@@ -273,5 +273,28 @@
     $s = "SELECT * FROM `$forumData` WHERE `topicID`=$topicID and `topic` IS NULL"; 
 
     return generate_forum_json($s, "Database error occured while fetching forum replies." );
+  }
+
+  function get_mission($missionID) {
+    global $db;
+    global $missionData;
+
+    $error = "Database error occured while fetching data for missionID: {$missionID}.";
+    $s = "SELECT * FROM `$missionData` WHERE `missionID`='$missionID'"; 
+    try {
+      ( $t = mysqli_query($db, $s) ); 
+    } catch (Exception $e)  {
+      return return_json( "502", $error );
+    }
+
+  
+    $num = mysqli_num_rows ( $t );
+    if( $num >= 1 ) {
+      while ( $r = mysqli_fetch_array ( $t, MYSQLI_ASSOC) ) {
+        return return_json( "200", convert_mission_to_json( $r )); 
+      }
+    } else {
+      return return_json( "502", $error );
+    }
   }
 ?>

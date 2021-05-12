@@ -11,4 +11,5 @@
   $storageData = "storageUpgrades";
   $traderData = "traderUpgrades";
   $forumData = "forum";
+  $missionData = "missions"
 ?>
