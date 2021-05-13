@@ -10,11 +10,13 @@ public class phptest : MonoBehaviour
     public ForumPanel chat;
     public TradeButtons tb;
     public TradeButtons ptb;
+    public QuestButton qb;
     public string ipaddr;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("PlayerData").GetComponent<PlayerData>();
+        ipaddr = player.ipaddr;
     }
 
     public void SendMsg(string msg)
@@ -29,7 +31,12 @@ public class phptest : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("message", msg);
 
-        UnityWebRequest www = UnityWebRequest.Post("http://10.192.237.191/info.php", form);
+        if(!player)
+        {
+            player = GameObject.FindGameObjectWithTag("PlayerData").GetComponent<PlayerData>();
+        }
+
+        UnityWebRequest www = UnityWebRequest.Post("http://" + player.ipaddr + "/info.php", form);
         yield return www.SendWebRequest();
 
         if (www.result == UnityWebRequest.Result.ProtocolError)
@@ -83,6 +90,10 @@ public class phptest : MonoBehaviour
                 {
                     onTradeReset();
                 }
+                else if(response.Contains("get_mission"))
+                {
+                    onQuestGet(json);
+                }
             }
         }
     }
@@ -132,5 +143,10 @@ public class phptest : MonoBehaviour
     public void onTradeReset()
     {
         ptb.findPlayerTrades();
+    }
+
+    public void onQuestGet(string j)
+    {
+        qb.UpdateText(j);
     }
 }

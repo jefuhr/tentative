@@ -27,10 +27,17 @@ public class SaveJson : MonoBehaviour
         int first, second;
         JsonObj jso = new JsonObj(am.SendPlayer());
         jsonstring = Regex.Unescape(JsonUtility.ToJson(jso));
+        jsonstring = Regex.Unescape(jsonstring);
         first = jsonstring.IndexOf("\"{");
         jsonstring = jsonstring.Remove(first, 1);
         second = jsonstring.Length - 2;
         jsonstring = jsonstring.Remove(second, 1);
+
+        first = jsonstring.IndexOf("\"[");
+        jsonstring = jsonstring.Remove(first, 1);
+        second = jsonstring.IndexOf("]\"") + 1;
+        jsonstring = jsonstring.Remove(second, 1);
+
         Debug.Log(jsonstring);
         pt.SendMsg(jsonstring);
     }

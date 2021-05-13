@@ -13,6 +13,7 @@ TagManager:
   - PlayerData
   - Trade
   - PlayerTrade
+  - blip
   layers:
   - Default
   - TransparentFX

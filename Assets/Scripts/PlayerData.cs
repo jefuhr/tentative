@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using System.Text.RegularExpressions;
+
 public class PlayerData : MonoBehaviour
 {
     public Player player;
     public string playerjson;
+
+    public string ipaddr;
 
     public class JsonObj
     {
@@ -15,6 +19,33 @@ public class PlayerData : MonoBehaviour
         public JsonObj(string act)
         {
             status = act;
+        }
+    }
+
+    public class AreaObj
+    {
+        public TileObj[] tiles = new TileObj[25];
+
+        public AreaObj(TileObj[] t)
+        {
+            for(int x = 0; x < t.Length; x++)
+            {
+                tiles[x] = t[x];
+            }
+        }
+    }
+
+    public class TileObj
+    {
+        public int id;
+        public int type;
+        public int level;
+
+        public TileObj(int i, int t, int l)
+        {
+            id = i;
+            type = t;
+            level = l;
         }
     }
 
@@ -32,6 +63,8 @@ public class PlayerData : MonoBehaviour
         public int currency1;
         public int currency2;
         public int workerCount;
+        public string tileJson;
+        public AreaObj area;
         //more to come
         public Player()
         {
@@ -76,6 +109,40 @@ public class PlayerData : MonoBehaviour
             currency1 = inv[7];
             currency2 = inv[8];
         }
+
+        public void makestring()
+        {
+            tileJson = "[";
+            for(int x = 0; x < 25; x++)
+            {
+                if(x < 24)
+                {
+                    tileJson += Regex.Unescape(JsonUtility.ToJson(area.tiles[x]) + ",");
+                }
+                else
+                {
+                    tileJson += Regex.Unescape(JsonUtility.ToJson(area.tiles[x]));
+                }
+            }
+            tileJson += "]";
+        }
+
+        public void setarea(int[,] tdata)
+        {
+            TileObj[] temp = new TileObj[25];
+            for(int x = 0; x < temp.Length; x++)
+            {
+                temp[x] = new TileObj(tdata[x, 0], tdata[x, 1], tdata[x, 2]);
+            }
+
+            area = new AreaObj(temp);
+            makestring();
+        }
+
+        public int gettiletype(int index)
+        {
+            return area.tiles[index].type;
+        }
     }
 
     private void Awake()
@@ -87,6 +154,28 @@ public class PlayerData : MonoBehaviour
     {
         playerjson = json.Substring(json.IndexOf("\"contents\":") + 11, json.Length - (json.IndexOf("\"contents\":") + 11) - 1);
         player = JsonUtility.FromJson<Player>(playerjson);
+
+        string temptile = "";
+        int first = 0;
+        int second = 0;
+        TileObj[] temp = new TileObj[25];
+        for (int x = 0; x < 25; x++)
+        {
+            if (player.tileJson.Equals("null"))
+            {
+                temp[x] = new TileObj(1, 1, 1);
+            }
+            else
+            {
+                first = player.tileJson.IndexOf("{", second);
+                second = player.tileJson.IndexOf("}", first) + 1;
+                temptile = player.tileJson.Substring(first, second - first);
+
+                temp[x] = JsonUtility.FromJson<TileObj>(temptile);
+            }
+        }
+
+        player.area = new AreaObj(temp);
     }
 
     public void SetPlayerValues(int[] inv)
@@ -94,8 +183,18 @@ public class PlayerData : MonoBehaviour
         player.setinv(inv);
     }
 
+    public void SetPlayerArea(int [,] area)
+    {
+        player.setarea(area);
+    }
+
     public void ZeroPlayer()
     {
         player = new Player();
+    }
+
+    public void SetIp(string ip)
+    {
+        ipaddr = ip;
     }
 }

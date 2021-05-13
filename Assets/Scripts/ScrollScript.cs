@@ -8,15 +8,17 @@ public class ScrollScript : MonoBehaviour
     private Scrollbar sb;
     private RectTransform rect;
     public GameObject panel;
+    private float start;
     // Start is called before the first frame update
     void Start()
     {
         sb = gameObject.GetComponent<Scrollbar>();
         rect = panel.GetComponent<RectTransform>();
+        start = rect.position.y;
     }
 
     public void Scroll()
     {
-        rect.position = new Vector3(rect.position.x, -1 * (18.95f - (sb.value * (18.95f * 2))), rect.position.z);
+        rect.position = new Vector3(rect.position.x, start + (-sb.value * (start * 2)), rect.position.z);
     }
 }

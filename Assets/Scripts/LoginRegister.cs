@@ -8,7 +8,14 @@ public class LoginRegister : MonoBehaviour
 {
     public GameObject username_text;
     public GameObject password_text;
+    public GameObject ipaddr_text;
     public phptest pt;
+    public PlayerData player;
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("PlayerData").GetComponent<PlayerData>();
+    }
 
     public class UserObj
     {
@@ -46,6 +53,7 @@ public class LoginRegister : MonoBehaviour
 
     public void onLogin()
     {
+        player.SetIp(ipaddr_text.GetComponent<InputField>().text);
         string username;
         string password;
         username = username_text.GetComponent<InputField>().text;
@@ -64,6 +72,7 @@ public class LoginRegister : MonoBehaviour
 
     public void onRegister()
     {
+        player.SetIp(ipaddr_text.GetComponent<InputField>().text);
         string username;
         string password;
         username = username_text.GetComponent<InputField>().text;
